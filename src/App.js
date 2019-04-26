@@ -1,26 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
+import Stopwatch from './Stopwatch';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      tickingTime: [],
+      tickTickTick: false
+    };
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <header className="App-header">
+          <Stopwatch clickHandler={this._clickedStart} timerBool={this.state.tickTickTick} timerTime={this.state.tickingTime.length} />
+        </header>
+      </div>
+    );
+  }
+
+  _clickedStart = async () => {
+    if (this.state.tickTickTick){
+      await this.setState({
+        tickTickTick: false
+      })
+    }
+    else{
+      await this.setState({
+        tickTickTick: true
+      })
+    }
+    
+    if(this.state.tickTickTick){
+      setInterval(()=>{
+        const newTime = (this.state.tickingTime).concat(["1"])
+        this.setState({
+          tickingTime: newTime
+        })
+      }, 1000);
+    }
+  }
+
 }
 
 export default App;
