@@ -15,7 +15,7 @@ class App extends React.Component{
     return (
       <div className="App">
         <header className="App-header">
-          <Stopwatch clickHandler={this._clickedButton} timerBool={this.state.tickTickTick} timerTime={this.state.tickingTime} />
+          <Stopwatch clickHandler={this._clickedButton} timerBool={this.state.tickTickTick} timerTime={this.state.tickingTime} resetHandler={this._resetTime} />
         </header>
       </div>
     );
@@ -38,8 +38,14 @@ class App extends React.Component{
         this.setState({
           tickingTime: this.state.tickingTime +1
         })
-      }, 10);
+      }, 1000);
     }
+  }
+
+  _resetTime = () =>{
+    this.setState({
+      tickingTime: 0
+    })
   }
 
 }
