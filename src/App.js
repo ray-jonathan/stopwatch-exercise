@@ -6,7 +6,7 @@ class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      tickingTime: [],
+      tickingTime: 0,
       tickTickTick: false
     };
   }
@@ -15,31 +15,30 @@ class App extends React.Component{
     return (
       <div className="App">
         <header className="App-header">
-          <Stopwatch clickHandler={this._clickedStart} timerBool={this.state.tickTickTick} timerTime={this.state.tickingTime.length} />
+          <Stopwatch clickHandler={this._clickedButton} timerBool={this.state.tickTickTick} timerTime={this.state.tickingTime} />
         </header>
       </div>
     );
   }
 
-  _clickedStart = async () => {
+  _clickedButton = async () => {
     if (this.state.tickTickTick){
       await this.setState({
         tickTickTick: false
       })
+      clearInterval(this.interval)
     }
     else{
       await this.setState({
         tickTickTick: true
       })
     }
-    
     if(this.state.tickTickTick){
-      setInterval(()=>{
-        const newTime = (this.state.tickingTime).concat(["1"])
+      this.interval = setInterval(()=>{
         this.setState({
-          tickingTime: newTime
+          tickingTime: this.state.tickingTime +1
         })
-      }, 1000);
+      }, 10);
     }
   }
 
